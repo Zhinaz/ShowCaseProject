@@ -91,12 +91,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public int getPlayersCount() {
-        String countQuery = "SELECT  * FROM " + TABLE_PLAYERS;
+        String countQuery = "SELECT * FROM " + TABLE_PLAYERS;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
+        int playerCount = cursor.getCount();
         cursor.close();
 
-        return cursor.getCount();
+        return playerCount;
     }
 
     public int updatePlayer(Player player) {
@@ -110,5 +111,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(player.getId()) });
     }
 
-    public void deletePlayer(Player player) {}
+    public void deletePlayer(Player player) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete(TABLE_PLAYERS, KEY_ID + " = ?",
+                new String[] { String.valueOf(player.getId()) });
+
+        sqLiteDatabase.close();
+    }
 }
