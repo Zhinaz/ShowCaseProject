@@ -67,15 +67,12 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_dblist) {
             Intent intent = new Intent(this, ListActivity.class);
             startActivity(intent);
-        } /* else if (id == R.id.nav_gallery) {
-
-        } */
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -95,17 +92,31 @@ public class MainActivity extends AppCompatActivity
                         txtGenre.getText().toString().equals("") ||
                         txtYear.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
-                } else {
-                    movie.setId(UUID.randomUUID().toString());
-                    movie.setTitle(txtTitle.getText().toString());
-                    movie.setGenre(txtGenre.getText().toString());
-                    movie.setYear(txtYear.getText().toString());
-                    database.addMovie(movie);
 
-                    txtTitle.setText("");
-                    txtGenre.setText("");
-                    txtYear.setText("");
-                    Toast.makeText(getApplicationContext(), "Movie added", Toast.LENGTH_SHORT).show();
+                    List<Movie> movieList = database.getAllMovies();
+                    for (Movie mov : movieList) {
+                        String log = "ID: " + mov.getId() +
+                                " Title: " + mov.getTitle() +
+                                " Genre: " + mov.getGenre() +
+                                " Year: " + mov.getYear();
+                        Log.i(TAG, log);
+                    }
+
+                } else {
+                    try {
+                        movie.setTitle(txtTitle.getText().toString());
+                        movie.setGenre(txtGenre.getText().toString());
+                        movie.setYear(Integer.parseInt(txtYear.getText().toString()));
+                        database.addMovie(movie);
+
+                        txtTitle.setText("");
+                        txtGenre.setText("");
+                        txtYear.setText("");
+                        Toast.makeText(getApplicationContext(), "Movie added", Toast.LENGTH_SHORT).show();
+                    } catch (NumberFormatException e) {
+                        Toast.makeText(getApplicationContext(), "Invalid year stated", Toast.LENGTH_SHORT).show();
+                        txtYear.setText("");
+                    }
                 }
             }
         });
@@ -113,13 +124,13 @@ public class MainActivity extends AppCompatActivity
 
     private void initiateliseDatabase() {
         Log.i(TAG, "Initialising Database");
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "Guardians of the Galaxy 2", "Science Fiction", "2017"));
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "Pulp Fiction", "Crime Drama", "1994"));
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Empire Strikes Back", "Fantasy", "1980"));
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "Forrest Gump", "Comedy Romance", "1994"));
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "Inception", "Adventure", "2010"));
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Dark Knight", "Action", "2008"));
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Shawshank Redemption", "Crime Drama", "1994"));
-        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Return of the King", "Adventure Fantasy", "2003"));
+        database.addMovie(new Movie("Guardians of the Galaxy 2", "Science Fiction", 2017));
+        database.addMovie(new Movie("Pulp Fiction", "Crime Drama", 1994));
+        database.addMovie(new Movie("The Empire Strikes Back", "Fantasy", 1980));
+        database.addMovie(new Movie("Forrest Gump", "Comedy Romance", 1994));
+        database.addMovie(new Movie("Inception", "Adventure", 2010));
+        database.addMovie(new Movie("The Dark Knight", "Action", 2008));
+        database.addMovie(new Movie("The Shawshank Redemption", "Crime Drama", 1994));
+        database.addMovie(new Movie("The Return of the King", "Adventure Fantasy", 2003));
     }
 }

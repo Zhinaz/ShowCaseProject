@@ -6,13 +6,19 @@ public class Movie {
     private String id;
     private String title;
     private String genre;
-    private String year;
+    private int year;
 
     public Movie() {
 
     }
 
-    public Movie(String id, String title, String genre, String year) {
+    public Movie(String title, String genre, int year) {
+        this.title = title;
+        this.genre = genre;
+        this.year = year;
+    }
+
+    public Movie(String id, String title, String genre, int year) {
         this.id = id;
         this.title = title;
         this.genre = genre;
@@ -43,11 +49,11 @@ public class Movie {
         this.genre = genre;
     }
 
-    public String getYear() {
+    public int getYear() {
         return year;
     }
 
-    public void setYear(String year) {
+    public void setYear(int year) {
         this.year = year;
     }
 }

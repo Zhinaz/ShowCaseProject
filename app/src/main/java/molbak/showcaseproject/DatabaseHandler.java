@@ -27,10 +27,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase dataBase) {
         String CREATE_MOVIES_TABLE = "CREATE TABLE " + TABLE_MOVIES + "(" +
-                KEY_ID + " TEXT PRIMARY KEY," +
+                KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 KEY_TITLE + " TEXT," +
                 KEY_GENRE + " TEXT," +
-                KEY_YEAR + " TEXT" +
+                KEY_YEAR + " INTEGER" +
                 ")";
         dataBase.execSQL(CREATE_MOVIES_TABLE);
     }
@@ -69,7 +69,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        Movie movie = new Movie(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        Movie movie = new Movie(cursor.getString(0), cursor.getString(1), cursor.getString(2), Integer.parseInt(cursor.getString(3)));
         cursor.close();
         return movie;
     }
@@ -87,7 +87,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 movie.setId(cursor.getString(0));
                 movie.setTitle(cursor.getString(1));
                 movie.setGenre(cursor.getString(2));
-                movie.setYear(cursor.getString(3));
+                movie.setYear(Integer.parseInt(cursor.getString(3)));
 
                 movieList.add(movie);
             } while (cursor.moveToNext());

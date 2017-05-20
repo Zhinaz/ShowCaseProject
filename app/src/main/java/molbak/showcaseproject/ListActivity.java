@@ -133,7 +133,7 @@ public class ListActivity extends AppCompatActivity {
         layout.addView(txtGenre, layoutParams);
 
         final EditText txtYear = new EditText(this);
-        txtYear.setText(movie.getYear());
+        txtYear.setText(Integer.toString(movie.getYear()));
         layout.addView(txtYear, layoutParams);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -145,7 +145,7 @@ public class ListActivity extends AppCompatActivity {
                 Movie mov = movie;
                 mov.setTitle(txtTitle.getText().toString());
                 mov.setGenre(txtGenre.getText().toString());
-                mov.setYear(txtYear.getText().toString());
+                mov.setYear(Integer.parseInt(txtYear.getText().toString()));
                 database.updateMovie(mov);
                 mAdapter.notifyItemChanged(position);
                 dialog.dismiss();
