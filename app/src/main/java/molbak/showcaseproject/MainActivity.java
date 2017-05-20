@@ -13,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.UUID;
@@ -22,8 +24,12 @@ public class MainActivity extends AppCompatActivity
 
     private static final String TAG = "MainActivity";
 
-    private Button btn_show_db;
-    DatabaseHandler database = null;
+    private Button btnAddMovie;
+    private EditText txtTitle;
+    private EditText txtGenre;
+    private EditText txtYear;
+
+    public DatabaseHandler database = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +43,10 @@ public class MainActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         database = new DatabaseHandler(this);
-
-        //database.dropTable();
 
         initiateliseUI();
 
@@ -63,29 +66,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        /*if (id == R.id.action_settings) {
-            return true;
-        }*/
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    //@SuppressWarnings("StatementWithEmptyBody")
-    @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
@@ -93,17 +73,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_dblist) {
             Intent intent = new Intent(this, ListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
+        } /* else if (id == R.id.nav_gallery) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } /*else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }*/
+        } */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -111,19 +83,28 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void initiateliseUI() {
-        btn_show_db = (Button) findViewById(R.id.btn_show_db);
-        btn_show_db.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // Reading all contacts
-                Log.d("Reading: ", "Reading all movies..");
-                List<Movie> playerList = database.getAllMovies();
+        txtTitle = (EditText) findViewById(R.id.txt_title);
+        txtGenre = (EditText) findViewById(R.id.txt_genre);
+        txtYear = (EditText) findViewById(R.id.txt_year);
 
-                for (Movie player : playerList) {
-                    String log = "Id: " + player.getId() +
-                            " ,Title: " + player.getTitle() +
-                            " ,Genre: " + player.getGenre() +
-                            " ,Year: " + player.getYear();
-                    Log.d("Movie: ", log);
+        btnAddMovie = (Button) findViewById(R.id.btn_add_movie);
+        btnAddMovie.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Movie movie = new Movie();
+                if (txtTitle.getText().toString().equals("") ||
+                        txtGenre.getText().toString().equals("") ||
+                        txtYear.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
+                } else {
+                    movie.setTitle(txtTitle.getText().toString());
+                    movie.setGenre(txtGenre.getText().toString());
+                    movie.setYear(txtYear.getText().toString());
+                    database.addMovie(movie);
+
+                    txtTitle.setText("");
+                    txtGenre.setText("");
+                    txtYear.setText("");
+                    Toast.makeText(getApplicationContext(), "Movie added", Toast.LENGTH_SHORT).show();
                 }
             }
         });

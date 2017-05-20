@@ -44,12 +44,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(dataBase);
     }
 
-    public void dropTable() {
-        System.out.println("DROPPED ALL TABLES");
-        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.execSQL("DROP TABLE players");
-    }
-
     public void addMovie(Movie movie) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
@@ -127,7 +121,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public void deleteMovie(Movie movie) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_MOVIES, KEY_ID + " = ?",
+        sqLiteDatabase.delete(TABLE_MOVIES, KEY_ID + "=?",
                 new String[] { String.valueOf(movie.getId()) });
 
         sqLiteDatabase.close();

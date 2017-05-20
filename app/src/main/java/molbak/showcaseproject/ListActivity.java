@@ -1,5 +1,6 @@
 package molbak.showcaseproject;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -11,9 +12,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -72,8 +76,8 @@ public class ListActivity extends AppCompatActivity {
                     @Override
                     public void onItemLongClick(View view, int position) {
                         Movie movie = movieList.get(position);
-                        AlertDialog deleteDialog = confirmDeletionDialog(movie, position);
-                        deleteDialog.show();
+                        AlertDialog manipulateDialog = manipulateMovieDialog(movie, position);
+                        manipulateDialog.show();
                     }
                 });
         layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -84,7 +88,79 @@ public class ListActivity extends AppCompatActivity {
         recyclerView.setAdapter(mAdapter);
     }
 
-    private AlertDialog confirmDeletionDialog(final Movie movie, final int position) {
+    private AlertDialog manipulateMovieDialog(final Movie movie, final int position) {
+        AlertDialog alertDialog = new AlertDialog.Builder(this)
+                .setTitle("Manipulate movie")
+                .setMessage("Make changes to " + movie.getTitle())
+                .setIcon(R.drawable.ic_menu_manage)
+                .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        AlertDialog deleteDialog = confirmDeleteDialog(movie, position);
+                        deleteDialog.show();
+                        dialog.dismiss();
+                    }
+                })
+                .setNegativeButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        AlertDialog updateDialog = updateDialog(movie, position);
+                        updateDialog.show();
+                        dialog.dismiss();
+                    }
+                })
+                .setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .create();
+        return alertDialog;
+    }
+
+    private AlertDialog updateDialog(final Movie movie, final int position) {
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        layoutParams.setMargins(12, 10, 12, 10);
+
+        final EditText txtTitle = new EditText(this);
+        txtTitle.setText(movie.getTitle());
+        layout.addView(txtTitle, layoutParams);
+
+        final EditText txtGenre = new EditText(this);
+        txtGenre.setText(movie.getGenre());
+        layout.addView(txtGenre, layoutParams);
+
+        final EditText txtYear = new EditText(this);
+        txtYear.setText(movie.getYear());
+        layout.addView(txtYear, layoutParams);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Update movie");
+        builder.setView(layout);
+        builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Movie mov = movie;
+                mov.setTitle(txtTitle.getText().toString());
+                mov.setGenre(txtGenre.getText().toString());
+                mov.setYear(txtYear.getText().toString());
+                database.updateMovie(mov);
+                mAdapter.notifyItemChanged(position);
+                dialog.dismiss();
+            }
+        });
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        return builder.create();
+    }
+
+    private AlertDialog confirmDeleteDialog(final Movie movie, final int position) {
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setTitle("Deleting movie")
                 .setMessage("Do you want to delete " + movie.getTitle() + "?")
@@ -96,7 +172,7 @@ public class ListActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 })
-                .setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
@@ -110,6 +186,5 @@ public class ListActivity extends AppCompatActivity {
         movieList.remove(position);
         mAdapter.notifyItemRemoved(position);
         mAdapter.notifyItemRangeChanged(position, movieList.size());
-
     }
 }
