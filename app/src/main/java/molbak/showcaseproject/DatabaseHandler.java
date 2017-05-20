@@ -62,8 +62,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = sqLiteDatabase.query(
                 TABLE_MOVIES,
-                new String[] {KEY_ID, KEY_TITLE, KEY_GENRE, KEY_YEAR},
-                KEY_ID + "=?", new String[] {String.valueOf(id)},
+                new String[]{KEY_ID, KEY_TITLE, KEY_GENRE, KEY_YEAR},
+                KEY_ID + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null
         );
         if (cursor != null) {
@@ -81,7 +81,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
-        if (cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             do {
                 Movie movie = new Movie();
                 movie.setId(cursor.getString(0));
@@ -116,13 +116,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_YEAR, movie.getYear());
 
         return sqLiteDatabase.update(TABLE_MOVIES, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(movie.getId()) });
+                new String[]{String.valueOf(movie.getId())});
     }
 
     public void deleteMovie(Movie movie) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.delete(TABLE_MOVIES, KEY_ID + "=?",
-                new String[] { String.valueOf(movie.getId()) });
+                new String[]{String.valueOf(movie.getId())});
 
         sqLiteDatabase.close();
     }

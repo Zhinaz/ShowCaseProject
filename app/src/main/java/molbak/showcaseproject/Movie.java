@@ -8,7 +8,7 @@ public class Movie {
     private String genre;
     private String year;
 
-    public Movie () {
+    public Movie() {
 
     }
 

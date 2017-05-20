@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity
                         txtYear.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
                 } else {
+                    movie.setId(UUID.randomUUID().toString());
                     movie.setTitle(txtTitle.getText().toString());
                     movie.setGenre(txtGenre.getText().toString());
                     movie.setYear(txtYear.getText().toString());

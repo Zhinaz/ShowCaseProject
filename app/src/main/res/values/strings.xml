@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Molbak</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Molbak Showcase</string>
     <string name="title_activity_list">Database Content</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
