@@ -8,6 +8,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +36,13 @@ public class ListActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mAdapter = new MoviesAdapter(movieList);
+        mAdapter = new MoviesAdapter(movieList, new MoviesAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Movie movie = movieList.get(position);
+                Toast.makeText(getApplicationContext(), "Movie: " + movie.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+        });
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
