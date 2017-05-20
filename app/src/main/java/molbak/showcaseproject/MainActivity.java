@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.widget.Button;
 
 import java.util.List;
+import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -130,13 +131,13 @@ public class MainActivity extends AppCompatActivity
 
     private void initiateliseDatabase() {
         Log.i(TAG, "Initialising Database");
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "Guardians of the Galaxy 2", "Science Fiction", "2017"));
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "Pulp Fiction", "Crime Drama", "1994"));
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "The Empire Strikes Back", "Fantasy", "1980"));
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "Forrest Gump", "Comedy Romance", "1994"));
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "Inception", "Adventure", "2010"));
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "The Dark Knight", "Action", "2008"));
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "The Shawshank Redemption", "Crime Drama", "1994"));
-        database.addMovie(new Movie(database.getMoviesCount() + 1, "The Return of the King", "Adventure Fantasy", "2003"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "Guardians of the Galaxy 2", "Science Fiction", "2017"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "Pulp Fiction", "Crime Drama", "1994"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Empire Strikes Back", "Fantasy", "1980"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "Forrest Gump", "Comedy Romance", "1994"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "Inception", "Adventure", "2010"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Dark Knight", "Action", "2008"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Shawshank Redemption", "Crime Drama", "1994"));
+        database.addMovie(new Movie(UUID.randomUUID().toString(), "The Return of the King", "Adventure Fantasy", "2003"));
     }
 }

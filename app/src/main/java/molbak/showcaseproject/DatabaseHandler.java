@@ -75,7 +75,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        Movie movie = new Movie(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        Movie movie = new Movie(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
         cursor.close();
         return movie;
     }
@@ -90,7 +90,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()){
             do {
                 Movie movie = new Movie();
-                movie.setId(Integer.parseInt(cursor.getString(0)));
+                movie.setId(cursor.getString(0));
                 movie.setTitle(cursor.getString(1));
                 movie.setGenre(cursor.getString(2));
                 movie.setYear(cursor.getString(3));

@@ -1,7 +1,9 @@
 package molbak.showcaseproject;
 
+import java.util.UUID;
+
 public class Movie {
-    private int id;
+    private String id;
     private String title;
     private String genre;
     private String year;
@@ -10,18 +12,18 @@ public class Movie {
 
     }
 
-    public Movie(int id, String title, String genre, String year) {
+    public Movie(String id, String title, String genre, String year) {
         this.id = id;
         this.title = title;
         this.genre = genre;
         this.year = year;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

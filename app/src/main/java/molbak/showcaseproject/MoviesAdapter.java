@@ -4,6 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -14,14 +16,20 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolde
 
     private List<Movie> movieList = null;
     private OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
 
     public interface OnItemClickListener {
         public void onItemClick(View view, int position);
     }
 
-    public MoviesAdapter(List<Movie> movieList, OnItemClickListener onItemClickListener) {
+    public interface OnItemLongClickListener {
+        public void onItemLongClick(View view, int position);
+    }
+
+    public MoviesAdapter(List<Movie> movieList, OnItemClickListener onItemClickListener, OnItemLongClickListener onItemLongClickListener) {
         this.movieList = movieList;
         this.onItemClickListener = onItemClickListener;
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     @Override
@@ -33,7 +41,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolde
 
     @Override
     public void onBindViewHolder(mViewHolder holder, final int position) {
-        Movie movie = movieList.get(position);
+        final Movie movie = movieList.get(position);
         holder.tv_title.setText(movie.getTitle());
         holder.tv_genre.setText(movie.getGenre());
         holder.tv_year.setText(movie.getYear());
@@ -42,6 +50,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolde
             @Override
             public void onClick(View v) {
                 onItemClickListener.onItemClick(v, position);
+            }
+        });
+        holder.viewContainer.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                onItemLongClickListener.onItemLongClick(v, position);
+                return true;
             }
         });
     }
@@ -60,8 +75,8 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolde
             tv_title = (TextView) view.findViewById(R.id.tv_title);
             tv_genre = (TextView) view.findViewById(R.id.tv_genre);
             tv_year = (TextView) view.findViewById(R.id.tv_year);
+
             viewContainer = view;
         }
     }
-
 }
