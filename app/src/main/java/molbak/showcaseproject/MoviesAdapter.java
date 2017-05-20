@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolder> {
@@ -13,13 +14,13 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolde
     private List<Movie> movieList = null;
 
     public class mViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_title, tv_year, tv_genre;
+        public TextView tv_title, tv_genre, tv_year;
 
         public mViewHolder(View view) {
             super(view);
             tv_title = (TextView) view.findViewById(R.id.tv_title);
-            tv_year = (TextView) view.findViewById(R.id.tv_year);
             tv_genre = (TextView) view.findViewById(R.id.tv_genre);
+            tv_year = (TextView) view.findViewById(R.id.tv_year);
         }
     }
 
