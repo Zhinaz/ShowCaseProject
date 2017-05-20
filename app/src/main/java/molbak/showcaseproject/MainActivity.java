@@ -10,14 +10,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.List;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -26,7 +24,7 @@ public class MainActivity extends AppCompatActivity
 
     private Button btnAddMovie;
     private EditText txtTitle;
-    private EditText txtGenre;
+    private EditText txtDescription;
     private EditText txtYear;
 
     public DatabaseHandler database = null;
@@ -81,7 +79,7 @@ public class MainActivity extends AppCompatActivity
 
     private void initiateliseUI() {
         txtTitle = (EditText) findViewById(R.id.txt_title);
-        txtGenre = (EditText) findViewById(R.id.txt_genre);
+        txtDescription = (EditText) findViewById(R.id.txt_description);
         txtYear = (EditText) findViewById(R.id.txt_year);
 
         btnAddMovie = (Button) findViewById(R.id.btn_add_movie);
@@ -89,7 +87,7 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View v) {
                 Movie movie = new Movie();
                 if (txtTitle.getText().toString().equals("") ||
-                        txtGenre.getText().toString().equals("") ||
+                        txtDescription.getText().toString().equals("") ||
                         txtYear.getText().toString().equals("")) {
                     Toast.makeText(getApplicationContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
 
@@ -97,7 +95,7 @@ public class MainActivity extends AppCompatActivity
                     for (Movie mov : movieList) {
                         String log = "ID: " + mov.getId() +
                                 " Title: " + mov.getTitle() +
-                                " Genre: " + mov.getGenre() +
+                                " Description: " + mov.getDescription() +
                                 " Year: " + mov.getYear();
                         Log.i(TAG, log);
                     }
@@ -105,12 +103,12 @@ public class MainActivity extends AppCompatActivity
                 } else {
                     try {
                         movie.setTitle(txtTitle.getText().toString());
-                        movie.setGenre(txtGenre.getText().toString());
+                        movie.setDescription(txtDescription.getText().toString());
                         movie.setYear(Integer.parseInt(txtYear.getText().toString()));
                         database.addMovie(movie);
 
                         txtTitle.setText("");
-                        txtGenre.setText("");
+                        txtDescription.setText("");
                         txtYear.setText("");
                         Toast.makeText(getApplicationContext(), "Movie added", Toast.LENGTH_SHORT).show();
                     } catch (NumberFormatException e) {

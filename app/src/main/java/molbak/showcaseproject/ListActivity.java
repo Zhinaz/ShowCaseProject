@@ -1,6 +1,5 @@
 package molbak.showcaseproject;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
@@ -10,9 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -128,9 +124,9 @@ public class ListActivity extends AppCompatActivity {
         txtTitle.setText(movie.getTitle());
         layout.addView(txtTitle, layoutParams);
 
-        final EditText txtGenre = new EditText(this);
-        txtGenre.setText(movie.getGenre());
-        layout.addView(txtGenre, layoutParams);
+        final EditText txtDescription = new EditText(this);
+        txtDescription.setText(movie.getDescription());
+        layout.addView(txtDescription, layoutParams);
 
         final EditText txtYear = new EditText(this);
         txtYear.setText(Integer.toString(movie.getYear()));
@@ -144,7 +140,7 @@ public class ListActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 Movie mov = movie;
                 mov.setTitle(txtTitle.getText().toString());
-                mov.setGenre(txtGenre.getText().toString());
+                mov.setDescription(txtDescription.getText().toString());
                 mov.setYear(Integer.parseInt(txtYear.getText().toString()));
                 database.updateMovie(mov);
                 mAdapter.notifyItemChanged(position);

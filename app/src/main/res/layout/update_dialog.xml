@@ -12,7 +12,7 @@
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/txt_genre"
+        android:id="@+id/txt_description"
         android:hint="Genre"
         android:layout_margin="10dp"
         android:layout_width="match_parent"

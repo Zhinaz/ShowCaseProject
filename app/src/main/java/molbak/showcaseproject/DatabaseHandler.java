@@ -17,7 +17,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String KEY_ID = "id";
     private static final String KEY_TITLE = "title";
-    private static final String KEY_GENRE = "genre";
+    private static final String KEY_DESC = "description";
     private static final String KEY_YEAR = "year";
 
     public DatabaseHandler(Context context) {
@@ -29,7 +29,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         String CREATE_MOVIES_TABLE = "CREATE TABLE " + TABLE_MOVIES + "(" +
                 KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                 KEY_TITLE + " TEXT," +
-                KEY_GENRE + " TEXT," +
+                KEY_DESC + " TEXT," +
                 KEY_YEAR + " INTEGER" +
                 ")";
         dataBase.execSQL(CREATE_MOVIES_TABLE);
@@ -50,7 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(KEY_ID, movie.getId());
         contentValues.put(KEY_TITLE, movie.getTitle());
-        contentValues.put(KEY_GENRE, movie.getGenre());
+        contentValues.put(KEY_DESC, movie.getDescription());
         contentValues.put(KEY_YEAR, movie.getYear());
 
         sqLiteDatabase.insert(TABLE_MOVIES, null, contentValues);
@@ -62,7 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         Cursor cursor = sqLiteDatabase.query(
                 TABLE_MOVIES,
-                new String[]{KEY_ID, KEY_TITLE, KEY_GENRE, KEY_YEAR},
+                new String[]{KEY_ID, KEY_TITLE, KEY_DESC, KEY_YEAR},
                 KEY_ID + "=?", new String[]{String.valueOf(id)},
                 null, null, null, null
         );
@@ -86,7 +86,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 Movie movie = new Movie();
                 movie.setId(cursor.getString(0));
                 movie.setTitle(cursor.getString(1));
-                movie.setGenre(cursor.getString(2));
+                movie.setDescription(cursor.getString(2));
                 movie.setYear(Integer.parseInt(cursor.getString(3)));
 
                 movieList.add(movie);
@@ -112,7 +112,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
         ContentValues values = new ContentValues();
         values.put(KEY_TITLE, movie.getTitle());
-        values.put(KEY_GENRE, movie.getGenre());
+        values.put(KEY_DESC, movie.getDescription());
         values.put(KEY_YEAR, movie.getYear());
 
         return sqLiteDatabase.update(TABLE_MOVIES, values, KEY_ID + " = ?",

@@ -1,27 +1,25 @@
 package molbak.showcaseproject;
 
-import java.util.UUID;
-
 public class Movie {
     private String id;
     private String title;
-    private String genre;
+    private String description;
     private int year;
 
     public Movie() {
 
     }
 
-    public Movie(String title, String genre, int year) {
+    public Movie(String title, String description, int year) {
         this.title = title;
-        this.genre = genre;
+        this.description = description;
         this.year = year;
     }
 
-    public Movie(String id, String title, String genre, int year) {
+    public Movie(String id, String title, String description, int year) {
         this.id = id;
         this.title = title;
-        this.genre = genre;
+        this.description = description;
         this.year = year;
     }
 
@@ -41,12 +39,12 @@ public class Movie {
         this.title = title;
     }
 
-    public String getGenre() {
-        return genre;
+    public String getDescription() {
+        return description;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getYear() {

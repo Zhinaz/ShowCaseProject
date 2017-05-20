@@ -4,12 +4,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolder> {
@@ -42,9 +38,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolde
     @Override
     public void onBindViewHolder(mViewHolder holder, final int position) {
         final Movie movie = movieList.get(position);
-        holder.tv_title.setText(movie.getTitle());
-        holder.tv_genre.setText(movie.getGenre());
-        holder.tv_year.setText(Integer.toString(movie.getYear()));
+        holder.txtTitle.setText(movie.getTitle());
+        holder.txtDescription.setText(movie.getDescription());
+        holder.txtYear.setText(Integer.toString(movie.getYear()));
 
         holder.viewContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,14 +63,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.mViewHolde
     }
 
     public class mViewHolder extends RecyclerView.ViewHolder {
-        public TextView tv_title, tv_genre, tv_year;
+        public TextView txtTitle, txtDescription, txtYear;
         public View viewContainer;
 
         public mViewHolder(View view) {
             super(view);
-            tv_title = (TextView) view.findViewById(R.id.tv_title);
-            tv_genre = (TextView) view.findViewById(R.id.tv_genre);
-            tv_year = (TextView) view.findViewById(R.id.tv_year);
+            txtTitle = (TextView) view.findViewById(R.id.tv_title);
+            txtDescription = (TextView) view.findViewById(R.id.tv_description);
+            txtYear = (TextView) view.findViewById(R.id.tv_year);
 
             viewContainer = view;
         }
