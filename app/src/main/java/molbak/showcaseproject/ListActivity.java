@@ -3,6 +3,7 @@ package molbak.showcaseproject;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -27,9 +28,8 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
 
         database = new DatabaseHandler(this);
-
+        movieList = database.getAllMovies();
         setupRecyclerView();
-        getMoviesDB();
     }
 
     private void setupRecyclerView() {
@@ -38,15 +38,8 @@ public class ListActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(),
+                DividerItemDecoration.VERTICAL));
         recyclerView.setAdapter(mAdapter);
-    }
-
-    private void getMoviesDB() {
-        movieList = database.getAllMovies();
-        Log.i(TAG, "Database size: " + database.getMoviesCount());
-        for (Movie movie : movieList) {
-            Log.i(TAG, "Movie: " + movie.getTitle());
-        }
-        mAdapter.notifyDataSetChanged();
     }
 }
