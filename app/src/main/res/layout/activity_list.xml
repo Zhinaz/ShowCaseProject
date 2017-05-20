@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="molbak.showcaseproject.MainActivity"
-    tools:showIn="@layout/app_bar_main">
+    tools:showIn="@layout/activity_list"
+    tools:context="molbak.showcaseproject.ListActivity">
 
-    <Button
-        android:id="@+id/btn_show_db"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Button"/>
+        android:scrollbars="vertical" />
 
 </android.support.constraint.ConstraintLayout>

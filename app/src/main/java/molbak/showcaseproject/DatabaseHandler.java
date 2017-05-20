@@ -11,13 +11,14 @@ import java.util.List;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "playerManager";
-    private static final String TABLE_PLAYERS = "players";
+    private static final int DATABASE_VERSION = 3;
+    private static final String DATABASE_NAME = "movieCollection";
+    private static final String TABLE_MOVIES = "movies";
 
     private static final String KEY_ID = "id";
-    private static final String KEY_NAME = "name";
-    private static final String KEY_PLACEMENT = "placement";
+    private static final String KEY_TITLE = "title";
+    private static final String KEY_GENRE = "genre";
+    private static final String KEY_YEAR = "year";
 
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -25,73 +26,85 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase dataBase) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_PLAYERS + "(" +
+        String CREATE_MOVIES_TABLE = "CREATE TABLE " + TABLE_MOVIES + "(" +
                 KEY_ID + " TEXT PRIMARY KEY," +
-                KEY_NAME + " TEXT," +
-                KEY_PLACEMENT + " TEXT" +
+                KEY_TITLE + " TEXT," +
+                KEY_GENRE + " TEXT," +
+                KEY_YEAR + " TEXT" +
                 ")";
-        dataBase.execSQL(CREATE_CONTACTS_TABLE);
+        dataBase.execSQL(CREATE_MOVIES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase dataBase, int oldVersion, int newVersion) {
         // Drop older table if existed
-        dataBase.execSQL("DROP TABLE IF EXISTS " + TABLE_PLAYERS);
+        dataBase.execSQL("DROP TABLE IF EXISTS " + TABLE_MOVIES);
 
         // Recreate table again
         onCreate(dataBase);
     }
 
-    public void addPlayer(Player player) {
+    public void dropTable() {
+        System.out.println("DROPPED ALL TABLES");
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.execSQL("DROP TABLE players");
+    }
+
+    public void addMovie(Movie movie) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_ID, player.getId());
-        contentValues.put(KEY_NAME, player.getName());
-        contentValues.put(KEY_PLACEMENT, player.getPlacement());
+        contentValues.put(KEY_ID, movie.getId());
+        contentValues.put(KEY_TITLE, movie.getTitle());
+        contentValues.put(KEY_GENRE, movie.getGenre());
+        contentValues.put(KEY_YEAR, movie.getYear());
 
-        sqLiteDatabase.insert(TABLE_PLAYERS, null, contentValues);
+        sqLiteDatabase.insert(TABLE_MOVIES, null, contentValues);
         sqLiteDatabase.close();
     }
 
-    public Player getPlayer(int id) {
+    public Movie getMovie(int id) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
 
         Cursor cursor = sqLiteDatabase.query(
-                TABLE_PLAYERS,
-                new String[] {KEY_ID, KEY_NAME, KEY_PLACEMENT},
+                TABLE_MOVIES,
+                new String[] {KEY_ID, KEY_TITLE, KEY_GENRE, KEY_YEAR},
                 KEY_ID + "=?", new String[] {String.valueOf(id)},
                 null, null, null, null
         );
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        Player player = new Player(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2));
-        return player;
+        Movie movie = new Movie(Integer.parseInt(cursor.getString(0)), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+        cursor.close();
+        return movie;
     }
 
-    public List<Player> getAllPlayers() {
-        List<Player> playerList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_PLAYERS;
+    public List<Movie> getAllMovies() {
+        List<Movie> movieList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_MOVIES;
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()){
             do {
-                Player player = new Player(0, null, null);
-                player.setId(Integer.parseInt(cursor.getString(0)));
-                player.setName(cursor.getString(1));
-                player.setPlacement(cursor.getString(2));
+                Movie movie = new Movie();
+                movie.setId(Integer.parseInt(cursor.getString(0)));
+                movie.setTitle(cursor.getString(1));
+                movie.setGenre(cursor.getString(2));
+                movie.setYear(cursor.getString(3));
 
-                playerList.add(player);
+                movieList.add(movie);
             } while (cursor.moveToNext());
         }
-        return playerList;
+        cursor.close();
+
+        return movieList;
     }
 
-    public int getPlayersCount() {
-        String countQuery = "SELECT * FROM " + TABLE_PLAYERS;
+    public int getMoviesCount() {
+        String countQuery = "SELECT * FROM " + TABLE_MOVIES;
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery(countQuery, null);
         int playerCount = cursor.getCount();
@@ -100,21 +113,22 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return playerCount;
     }
 
-    public int updatePlayer(Player player) {
+    public int updateMovie(Movie movie) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_NAME, player.getName());
-        values.put(KEY_PLACEMENT, player.getPlacement());
+        values.put(KEY_TITLE, movie.getTitle());
+        values.put(KEY_GENRE, movie.getGenre());
+        values.put(KEY_YEAR, movie.getYear());
 
-        return sqLiteDatabase.update(TABLE_PLAYERS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(player.getId()) });
+        return sqLiteDatabase.update(TABLE_MOVIES, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(movie.getId()) });
     }
 
-    public void deletePlayer(Player player) {
+    public void deleteMovie(Movie movie) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(TABLE_PLAYERS, KEY_ID + " = ?",
-                new String[] { String.valueOf(player.getId()) });
+        sqLiteDatabase.delete(TABLE_MOVIES, KEY_ID + " = ?",
+                new String[] { String.valueOf(movie.getId()) });
 
         sqLiteDatabase.close();
     }
