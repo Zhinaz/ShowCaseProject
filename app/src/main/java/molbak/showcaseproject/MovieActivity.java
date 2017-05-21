@@ -1,11 +1,13 @@
 package molbak.showcaseproject;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.Image;
 import android.os.AsyncTask;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,9 +34,8 @@ import java.util.List;
 
 public class MovieActivity extends AppCompatActivity {
 
-    String query = null;
-
-    private TextView txtTitle, txtScore, txtVotes, txtDescription;
+    private String query = null;
+    private TextView txtScore, txtVotes, txtDescription;
     private ImageView imgBackground;
     private static final String POSTER_WIDTH = "w500";
 
@@ -50,7 +51,6 @@ public class MovieActivity extends AppCompatActivity {
     }
 
     private void initialiseUI() {
-        txtTitle = (TextView) findViewById(R.id.txt_title);
         txtScore = (TextView) findViewById(R.id.txt_score);
         txtVotes = (TextView) findViewById(R.id.txt_score_votes);
         txtDescription = (TextView) findViewById(R.id.txt_description);
@@ -80,7 +80,8 @@ public class MovieActivity extends AppCompatActivity {
                         POSTER_WIDTH +
                         movie.get(1);
                 Picasso.with(getApplicationContext()).load(posterQuery).into(imgBackground);
-                txtTitle.setText(movie.get(2));
+
+                setTitle(movie.get(2));
                 txtScore.setText(movie.get(3) + "/10");
                 txtVotes.setText(" Votes: " + movie.get(4));
                 txtDescription.setText(movie.get(5));

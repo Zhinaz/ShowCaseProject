@@ -22,7 +22,6 @@ import java.util.List;
 
 public class ListActivity extends AppCompatActivity {
 
-    private static final String TAG = "ListActivity";
     public static final String SEND_TITLE = "MOVIE_TITLE";
 
     private List<Movie> movieList = new ArrayList<>();
@@ -70,7 +69,6 @@ public class ListActivity extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), MovieActivity.class);
                 intent.putExtra(SEND_TITLE, movie.getTitle());
                 startActivity(intent);
-                //Toast.makeText(getApplicationContext(), "Movie: " + movie.getTitle(), Toast.LENGTH_SHORT).show();
             }
         },
                 new MoviesAdapter.OnItemLongClickListener() {

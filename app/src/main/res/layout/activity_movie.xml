@@ -9,32 +9,20 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="molbak.showcaseproject.MovieActivity">
 
-    <TextView
-        android:id="@+id/txt_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="24sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        tools:text="Title"
-        android:layout_marginStart="8dp" />
-
     <android.support.constraint.ConstraintLayout
         android:id="@+id/layout_middle"
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
+        android:layout_margin="8dp"
         tools:layout_editor_absoluteY="0dp"
         tools:layout_editor_absoluteX="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txt_title" >
+        app:layout_constraintTop_toBottomOf="parent" >
 
         <ImageView
             android:id="@+id/img_background"
             android:layout_weight="2"
-            android:layout_width="176dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             app:srcCompat="@color/cardview_dark_background"
             tools:layout_editor_absoluteX="8dp"
@@ -50,7 +38,7 @@
             android:textColor="@color/colorOrange"
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/img_background"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_middle"
             tools:text="Score"
             android:layout_marginStart="8dp" />
 
@@ -62,7 +50,7 @@
             android:layout_marginTop="8dp"
             android:textSize="18sp"
             app:layout_constraintLeft_toRightOf="@+id/txt_score_text"
-            app:layout_constraintTop_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/layout_middle"
             tools:text="ScoreAvg"
             android:layout_marginStart="8dp" />
 
