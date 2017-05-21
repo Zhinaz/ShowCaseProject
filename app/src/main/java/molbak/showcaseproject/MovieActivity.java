@@ -37,7 +37,6 @@ public class MovieActivity extends AppCompatActivity {
     private TextView txtTitle, txtScore, txtVotes, txtDescription;
     private ImageView imgBackground;
     private static final String POSTER_WIDTH = "w500";
-    private static final float BACKGROUND_ALPHA = 0.4f;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,6 @@ public class MovieActivity extends AppCompatActivity {
         txtVotes = (TextView) findViewById(R.id.txt_score_votes);
         txtDescription = (TextView) findViewById(R.id.txt_description);
         imgBackground = (ImageView) findViewById(R.id.img_background);
-        //imgBackground.setAlpha(BACKGROUND_ALPHA);
     }
 
     private class TMDBQueryManager extends AsyncTask<String, Void, List<String>> {
@@ -82,8 +80,6 @@ public class MovieActivity extends AppCompatActivity {
                         POSTER_WIDTH +
                         movie.get(1);
                 Picasso.with(getApplicationContext()).load(posterQuery).into(imgBackground);
-                Log.i(DEBUG_TAG, posterQuery);
-
                 txtTitle.setText(movie.get(2));
                 txtScore.setText(movie.get(3) + "/10");
                 txtVotes.setText(" Votes: " + movie.get(4));

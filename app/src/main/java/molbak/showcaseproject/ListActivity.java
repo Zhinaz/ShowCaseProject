@@ -53,7 +53,7 @@ public class ListActivity extends AppCompatActivity {
 
         if (id == R.id.btn_info) {
             Snackbar snackbar = Snackbar
-                    .make(recyclerView, "Long click to manipute movies", Snackbar.LENGTH_LONG);
+                    .make(recyclerView, "Click to view | Long click to manipute", Snackbar.LENGTH_LONG);
 
             snackbar.show();
             return true;
