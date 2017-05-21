@@ -127,15 +127,6 @@ public class MainActivity extends AppCompatActivity
         new TMDBQueryManager().execute("Forrest Gump");
         new TMDBQueryManager().execute("Shawshank");
         new TMDBQueryManager().execute("Empire Strikes Back");
-
-        // database.addMovie(new Movie("Guardians of the Galaxy 2", "Science Fiction", 2017));
-        // database.addMovie(new Movie("Pulp Fiction", "Crime Drama", 1994));
-        // database.addMovie(new Movie("The Empire Strikes Back", "Fantasy", 1980));
-        // database.addMovie(new Movie("Forrest Gump", "Comedy Romance", 1994));
-        // database.addMovie(new Movie("Inception", "Adventure", 2010));
-        // database.addMovie(new Movie("The Dark Knight", "Action", 2008));
-        // database.addMovie(new Movie("The Shawshank Redemption", "Crime Drama", 1994));
-        // database.addMovie(new Movie("The Return of the King", "Adventure Fantasy", 2003));
     }
 
     public boolean isOnline() {

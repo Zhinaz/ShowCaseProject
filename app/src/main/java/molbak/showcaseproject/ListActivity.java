@@ -1,6 +1,7 @@
 package molbak.showcaseproject;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -22,6 +23,7 @@ import java.util.List;
 public class ListActivity extends AppCompatActivity {
 
     private static final String TAG = "ListActivity";
+    public static final String SEND_TITLE = "MOVIE_TITLE";
 
     private List<Movie> movieList = new ArrayList<>();
     private RecyclerView recyclerView = null;
@@ -65,7 +67,10 @@ public class ListActivity extends AppCompatActivity {
             @Override
             public void onItemClick(View view, int position) {
                 Movie movie = movieList.get(position);
-                Toast.makeText(getApplicationContext(), "Movie: " + movie.getTitle(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), MovieActivity.class);
+                intent.putExtra(SEND_TITLE, movie.getTitle());
+                startActivity(intent);
+                //Toast.makeText(getApplicationContext(), "Movie: " + movie.getTitle(), Toast.LENGTH_SHORT).show();
             }
         },
                 new MoviesAdapter.OnItemLongClickListener() {
