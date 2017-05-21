@@ -168,21 +168,16 @@ public class MainActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(Movie movie) {
             Log.i(DEBUG_TAG, "PostExecute");
-            if (movie != null) {
+            if (movie.getTitle() != null) {
                 Log.i(DEBUG_TAG, "Adding movie to DB");
                 database.addMovie(movie);
                 Toast.makeText(getApplicationContext(), "Movie added", Toast.LENGTH_SHORT).show();
             } else {
-                Toast.makeText(getApplicationContext(), "Movie NOT added", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Could not find movie", Toast.LENGTH_SHORT).show();
             }
 
         }
 
-        /**
-         * Searches IMDBs API for the given query
-         * @param query The query to search.
-         * @return A list of all hits.
-         */
         public Movie searchIMDB(String query) throws IOException {
             // Build URL
             StringBuilder stringBuilder = new StringBuilder();
